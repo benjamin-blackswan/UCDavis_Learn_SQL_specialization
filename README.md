@@ -11,5 +11,7 @@ Dbeaver is a SQL GUI client that is able to handle SQLite, which is used in this
 
 
 Thanks for reading
+
 Ben.
+
 26 July 2022.
