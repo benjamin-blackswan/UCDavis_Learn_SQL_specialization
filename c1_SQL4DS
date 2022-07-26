@@ -1,13 +1,47 @@
 Week 3 Practice quiz writing queries
 
 1. How many albums does the artist Led Zeppelin have?
-select count(albumid) from artists ar
-left join albums al
-on ar.artistid = al.artistid
-where ar.name = "Led Zeppelin"
+
+          select count(albumid) from artists ar
+          left join albums al
+          on ar.artistid = al.artistid
+          where ar.name = "Led Zeppelin"
 
 
-3. Create a list of album titles and the unit prices for the artist "Audioslave".
-4. Find the first and last name of any customer who does not have an invoice. Are there any customers returned from the query?
-5. Find the total price for each album.
-6. How many records are created when you apply a Cartesian join to the invoice and invoice items table?
+2. Create a list of album titles and the unit prices for the artist "Audioslave".
+
+          SELECT albums.title, count(artists.name) FROM tracks
+          left join albums
+          on tracks.AlbumId = albums.AlbumId
+          left join invoice_items
+          on tracks.TrackId = invoice_items.TrackId
+          left join artists
+          on albums.ArtistId = artists.ArtistId
+          where artists.name = "Audioslave"
+
+3. Find the first and last name of any customer who does not have an invoice. Are there any customers returned from the query?
+
+          select customers.FirstName,customers.LastName,
+          invoices.InvoiceId
+          from customers
+          left join invoices
+          on customers.CustomerId=invoices.CustomerId
+          where invoices.InvoiceId is null;
+
+
+4. Find the total price for each album. What is the total price for the album “Big Ones”?
+
+          SELECT t.AlbumId, a.title as Ablum_title, t.Name as Track_Name, sum(i.UnitPrice) FROM tracks t
+          left join invoice_items i
+          on t.TrackId = i.TrackId
+          left join albums a
+          on t.AlbumId = a.AlbumId
+          where i.unitprice is not null
+          group by t.albumid
+          having a.title="Big Ones"
+
+5. How many records are created when you apply a Cartesian join to the invoice and invoice items table?
+
+          select invoices.InvoiceId
+          from invoices
+          cross join invoice_items
