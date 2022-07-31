@@ -22,3 +22,16 @@ module 4 coding questions
       order by LastName ASC
       
 4. Profiling the Customers table, answer the following question. Are there any columns with null values? Indicate any below. Select all that apply.
+
+5. Find the cities with the most customers and rank in descending order.
+	select city, count(city) from customers 
+	group by city
+	order by count(city) DESC
+	
+6. Create a new customer invoice id by combining a customer’s invoice id with their first and last name while ordering your query in the following order: firstname, lastname, and invoiceID.
+
+			select i.InvoiceId , c.FirstName ,c.LastName , c.FirstName || c.LastName || i.InvoiceId as New_InvoiceID
+			FROM customers c
+			left join invoices i
+			on c.CustomerId = i.CustomerId 
+			where c.LastName = "Gruber"
